@@ -1,0 +1,39 @@
+/* Header.module.css */
+.header {
+  margin-top: 5px;
+  margin-left: 250px; /* ความกว้างของ sidebar */
+  background-color: #02786e;
+  padding: 16px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 16px;
+  position: relative;
+}
+
+
+.headerTitle {
+  margin: 0; 
+  font-size: 24px;
+  
+}
+
+.header_button {
+  display: flex; /*เพื่อให้ icon เรียงตัวกันและใช้ gap ได้*/
+  gap: 15px;
+  align-items: center; /*จัด icon ให้อยู่กึ่งกลางแนวตั้งภายในกลุ่ม icon เอง*/
+
+  position: absolute; /* นำออกจาก normal flow เพื่อให้ .headerTitle อยู่ตรงกลางได้อิสระ */
+  right: 16px; /* ระยะห่างจากขอบขวาของ .header (สัมพันธ์กับ padding ของ .header) */
+  top: 50%; /* จัดให้อยู่กึ่งกลางแนวตั้ง (จุดเริ่มต้นบนสุดของ element) */
+  transform: translateY(-50%); /* ย้ายขึ้นไปครึ่งหนึ่งของความสูงตัวเองเพื่อให้กึ่งกลางจริงๆ */
+}
+
+.icon {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: white; /* กำหนดสีของ icon ให้เป็นสีขาวเพื่อให้มองเห็นชัดเจน */
+}

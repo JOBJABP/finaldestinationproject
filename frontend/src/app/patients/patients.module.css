@@ -1,0 +1,392 @@
+/* ==========================================================================
+  📦 CONTAINER + HEADER
+========================================================================== */
+.container {
+  padding: 20px;
+  font-family: sans-serif;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #00695c;
+}
+
+
+/* ==========================================================================
+  ➕ ADD BUTTON
+========================================================================== */
+.addButton {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.addButton:hover {
+  background-color: #004d40;
+}
+
+.icon {
+  margin-right: 6px;
+}
+
+/* ==========================================================================
+  📌 SEARCH INPUT
+========================================================================== */
+
+.searchRow {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  align-items: center;
+}
+
+.searchInput {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.searchButton, .resetButton {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+}
+
+.searchButton:hover{
+    background-color: #004d40;
+}
+
+.resetButton {
+  background-color: #9e9e9e;
+}
+
+.resetButton:hover {
+  background-color: #5c5c5c;
+}
+
+.error {
+  color: red;
+  margin-top: 8px;
+}
+
+
+/* ==========================================================================
+  📋 TABLE
+========================================================================== */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.table th,
+.table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.table th {
+  background-color: #00796b;
+  color: white;
+}
+
+
+/* ==========================================================================
+  ⏹️ ACTIONS
+========================================================================== */
+.select {
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.iconButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+}
+
+.iconButton:hover {
+  color: #00796b;
+}
+
+.noData {
+  margin-top: 16px;
+  text-align: center;
+  color: #888;
+}
+
+
+/* ==========================================================================
+  🧾 MODAL BASE STYLE
+========================================================================== */
+.modalAddButton {
+  background-color: #00796b;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  position: relative;
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  width: 900px;
+  max-width: 95vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+
+/* ==========================================================================
+  🧩 FORM GRID
+========================================================================== */
+.modalContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.formGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px 20px;
+  margin-right: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.formGrid input,
+.formGrid select,
+.formGrid textarea {
+  box-sizing: border-box;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+
+/* ขนาดช่องเฉพาะตาม name */
+.formGrid input[name="first_name"],
+.formGrid input[name="last_name"] {
+  flex: 0 0 48%;
+}
+
+.formGrid input[name="age"],
+.formGrid input[name="gender"],
+.formGrid input[name="blood_group"] {
+  flex: 0 0 15%;
+}
+
+.formGrid input[name="card_id"],
+.formGrid input[name="phone_number"] {
+  flex: 0 0 30%;
+}
+
+.formGrid textarea[name="address"] {
+  flex: 0 0 100%;
+  height: 100px;
+  resize: none;
+}
+
+
+/* ==========================================================================
+  🏷️ FORM GROUP + FLOAT LABEL
+========================================================================== */
+.formGroup {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.formGroup input,
+.formGroup select,
+.formGroup textarea {
+  width: 100%;
+  padding: 12px 10px 8px 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: none;
+}
+
+.formGroup select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3csvg%20width%3d%2210%22%20height%3d%227%22%20viewBox%3d%220%200%2010%207%22%20xmlns%3d%22http%3a//www.w3.org/2000/svg%22%3e%3cpolygon%20points%3d%220%2c0%2010%2c0%205%2c7%22%20fill%3d%22%23666%22/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 10px 7px;
+}
+
+.formGroup label {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  color: #999;
+  font-size: 16px;
+  pointer-events: none;
+  background-color: white;
+  padding: 0 4px;
+  transition: all 0.2s ease;
+}
+
+/* เมื่อ focus หรือมีค่า */
+.formGroup input:focus + label,
+.formGroup input:not(:placeholder-shown) + label,
+.formGroup select:focus + label,
+.formGroup select:not([value=""]) + label,
+.formGroup textarea:focus + label,
+.formGroup textarea:not(:placeholder-shown) + label {
+  top: -8px;
+  left: 8px;
+  font-size: 12px;
+  color: #00796b;
+  font-weight: 600;
+}
+
+.formGroup textarea {
+  min-height: 100px;
+  resize: none;
+}
+
+
+/* ==========================================================================
+  🧾 MODAL FORM ELEMENTS
+========================================================================== */
+.modal input,
+.modal select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.modal textarea {
+  width: 100%;
+  height: 100px;
+  resize: none;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.modal input:focus,
+.modal select:focus,
+.modal textarea:focus {
+  border-color: #00796b;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 121, 107, 0.2);
+}
+
+
+/* ==========================================================================
+  ✅ MODAL BUTTONS
+========================================================================== */
+.modalButtons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.modalButtons button {
+  margin-top: 20px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.modalButtons button:first-child {
+  background-color: #ccc;
+  color: #333;
+}
+
+.modalButtons button:first-child:hover {
+  background-color: #bbb;
+}
+
+.confirmButton {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.confirmButton:hover {
+  background-color: #2a682d;
+}
+
+
+/* ==========================================================================
+  ❌ MODAL CLOSE BUTTON (view info)
+========================================================================== */
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: #f44336;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.closeButton:hover {
+  background-color: #d32f2f;
+  transform: scale(1.1);
+}

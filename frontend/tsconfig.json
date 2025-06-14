@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/patients/page.jsx", "src/app/components/Sidebar.jsx", "src/app/components/Header.jsx", "src/app/appointment/page.jsx", "src/app/appointment/AddAppointmentModal.jsx", "src/app/layout.jsx", "src/app/patients/ViewpatientsModal.jsx", "src/app/page.jsx"],
   "exclude": ["node_modules"]
 }
