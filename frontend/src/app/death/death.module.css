@@ -1,0 +1,391 @@
+/* ==========================================================================
+  📌 LAYOUT / CONTAINER / GENERAL
+========================================================================== */
+.container {
+  padding: 20px;
+  font-family: sans-serif;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.headerRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #00695c;
+}
+
+
+/* ==========================================================================
+  📌 TABLE
+========================================================================== */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  margin-top: 20px;
+}
+
+.table th,
+.table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.table th {
+  background-color: #00796b;
+  color: white;
+}
+
+
+/* ==========================================================================
+  📌 BUTTONS
+========================================================================== */
+.addButton {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.addButton:hover {
+  background-color: #004d40;
+}
+
+.modalAddButton {
+  background-color: #00796b;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.iconButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+}
+
+.iconButton:hover {
+  color: #00796b;
+}
+
+.confirmButton {
+  background-color: #4caf50;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.confirmButton:hover {
+  background-color: #2a682d;
+}
+
+.cancelButton {
+  background-color: #ccc;
+  color: #333;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.cancelButton:hover {
+  background-color: #bbb;
+}
+
+.checkButton {
+  background-color: #00796b;
+  color: white;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(0, 121, 107, 0.4);
+  transition: background-color 0.3s ease, transform 0.15s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.checkButton:hover {
+  background-color: #004d40;
+  transform: scale(1.05);
+}
+
+.checkButton:active {
+  transform: scale(0.98);
+}
+
+/* ==========================================================================
+  📌 BUTTONS
+========================================================================== */
+
+.searchRow {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  align-items: center;
+}
+
+.searchInput {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.searchButton, .resetButton {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+}
+
+.searchButton:hover{
+    background-color: #004d40;
+}
+
+.resetButton {
+  background-color: #9e9e9e;
+}
+
+.resetButton:hover {
+  background-color: #5c5c5c;
+}
+
+.error {
+  color: red;
+  margin-top: 8px;
+}
+
+/* ==========================================================================
+  📌 MODAL
+========================================================================== */
+.modalOverlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  position: relative;
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  width: 900px;
+  max-width: 95vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: #f44336;
+  color: white;
+  font-size: 1rem;
+  padding: 0.5rem 0.75rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.closeButton:hover {
+  background-color: #d32f2f;
+  transform: scale(1.1);
+}
+
+/* ==========================================================================
+  📌 SEARCH INPUT
+========================================================================== */
+.searchInput {
+  width: 100%; /* หรือกำหนดค่าคงที่เช่น 400px */
+  padding: 10px 14px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+  📌 FORM
+========================================================================== */
+.modalContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.formGrid input,
+.formGrid select,
+.formGrid textarea {
+  box-sizing: border-box;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 0;
+  width: 100%;
+}
+
+.formGroup {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.formGroup input,
+.formGroup select,
+.formGroup textarea {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.formGroup select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3csvg%20width%3d%2210%22%20height%3d%227%22%20viewBox%3d%220%200%2010%207%22%20xmlns%3d%22http%3a//www.w3.org/2000/svg%22%3e%3cpolygon%20points%3d%220%2c0%2010%2c0%205%2c7%22%20fill%3d%22%23666%22/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 10px 7px;
+}
+
+.formGroup textarea {
+  min-height: 100px;
+  resize: none;
+}
+
+.formGroup label {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-size: 16px;
+  color: #999;
+  background-color: white;
+  padding: 0 4px;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: calc(100% - 24px);
+  grid-column: 1 / -1;
+}
+
+.formGroup input:focus + label,
+.formGroup input:not(:placeholder-shown) + label,
+.formGroup select:focus + label,
+.formGroup select:not([value=""]) + label,
+.formGroup textarea:focus + label,
+.formGroup textarea:not(:placeholder-shown) + label {
+  top: -8px;
+  left: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #00796b;
+}
+
+
+/* ==========================================================================
+  📌 SPECIAL FORM ROWS
+========================================================================== */
+.checkRow {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.formGroup.checkRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+
+/* ==========================================================================
+  📌 MODAL BUTTON ROW
+========================================================================== */
+.modalButtons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 20px;
+}
+
+
+/* ==========================================================================
+  📌 UTILITIES
+========================================================================== */
+.select {
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.icon {
+  margin-right: 6px;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.error {
+  grid-column: 1 / -1;
+  color: red;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.noData {
+  margin-top: 16px;
+  text-align: center;
+  color: #888;
+}

@@ -12,28 +12,28 @@ const AddTreatmentModal = ({ onClose }) => {
     treatment_type: ''
   });
 
-  const [errorMsg, setErrorMsg] = useState('');
+  const [error, setError] = useState('');
 
-  const handleCheckPatient = async () => {
-  if (!patientsId.trim()) {
-    alert('กรุณากรอกรหัสผู้ป่วย');
-    return;
-  }
+    const handleCheckPatient = async () => {
+    if (!patientsId.trim()) {
+      alert('กรุณากรอกรหัสผู้ป่วย');
+      return;
+    }
 
-  try {
+    try {
       const res = await fetch(`http://localhost:5000/api/patients/${patientsId}`);
-      if (!res.ok) {
-        setErrorMsg('ไม่พบผู้ป่วย');
-        throw new Error('ไม่พบผู้ป่วย');
-      }
+      if (!res.ok) throw new Error('ไม่พบผู้ป่วย');
       const data = await res.json();
-      setPatientData(data);
-      setErrorMsg('');
+
+      const age = calculateAgeFromBirthdate(data.birthdate);
+      setPatientData({ ...data, age }); // ✅ เพิ่มอายุที่คำนวณได้ลงใน patientData
+      setError('');
     } catch (err) {
-      alert(err.message || 'เกิดข้อผิดพลาดในการตรวจสอบผู้ป่วย');
       setPatientData(null);
+      setError(err.message);
     }
   };
+
 
 
   const handleSubmit = async () => {
@@ -80,9 +80,10 @@ const AddTreatmentModal = ({ onClose }) => {
             required
           />
           <label htmlFor="patients_id">กรอกรหัสผู้ป่วย</label>
-          <button onClick={handleCheckPatient} className={styles.checkButton}>ตรวจสอบ</button>
-          {errorMsg && <p className={styles.error}>{errorMsg}</p>}        
+          <button onClick={handleCheckPatient} className={styles.checkButton}>ตรวจสอบ</button>      
         </div>
+
+        {error && <div className={styles.error}>{error}</div>}
 
         {patientData && (
           <div className={styles.patientInfo}>
@@ -132,8 +133,8 @@ const AddTreatmentModal = ({ onClose }) => {
           </div>
         )}
 
-
-        <div className={styles.formGroup}>
+        <form onSubmit={handleSubmit} className={styles.formGrid}>
+          <div className={styles.formGroup}>
           <input
             type="date"
             name="treatment_date"
@@ -166,6 +167,7 @@ const AddTreatmentModal = ({ onClose }) => {
           />
           <label htmlFor="description">รายละเอียดการรักษา</label>
         </div>
+        </form>
 
         <div className={styles.modalButtons}>
           <button onClick={onClose} className={styles.dismissButton}>ยกเลิก</button>
@@ -175,6 +177,18 @@ const AddTreatmentModal = ({ onClose }) => {
     </div>
   );
 };
+
+function calculateAgeFromBirthdate(birthdate) {
+  if (!birthdate) return '';
+  const today = new Date();
+  const birth = new Date(birthdate);
+  let age = today.getFullYear() - birth.getFullYear();
+  const m = today.getMonth() - birth.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
+    age--;
+  }
+  return age.toString();
+}
 
 
 export default AddTreatmentModal;

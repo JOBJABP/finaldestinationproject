@@ -14,7 +14,7 @@ export default function AddAppointmentModal({ onClose, onSave }) {
     description: '',
   });
   const [patientData, setPatientData] = useState(null);
-  const [errorMsg, setErrorMsg] = useState('');
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,16 +29,13 @@ export default function AddAppointmentModal({ onClose, onSave }) {
 
   try {
       const res = await fetch(`http://localhost:5000/api/patients/${patientsId}`);
-      if (!res.ok) {
-        setErrorMsg('ไม่พบผู้ป่วย');
-        throw new Error('ไม่พบผู้ป่วย');
-      }
+      if (!res.ok) throw new Error('ไม่พบผู้ป่วย');
       const data = await res.json();
       setPatientData(data);
-      setErrorMsg('');
+      setError('');
     } catch (err) {
-      alert(err.message || 'เกิดข้อผิดพลาดในการตรวจสอบผู้ป่วย');
       setPatientData(null);
+      setError(err.message);
     }
   };
 
@@ -90,9 +87,10 @@ export default function AddAppointmentModal({ onClose, onSave }) {
             required
           />
           <label htmlFor="patients_id">รหัสผู้ป่วย</label>
-          <button onClick={handleCheckPatient} className={styles.checkButton}>ตรวจสอบ</button>
-          {errorMsg && <p className={styles.error}>{errorMsg}</p>} 
+          <button onClick={handleCheckPatient} className={styles.checkButton}>ตรวจสอบ</button> 
         </div>
+
+        {error && <div className={styles.error}>{error}</div>}
 
         {patientData && (
           <div className={styles.patientInfo}>
@@ -109,6 +107,7 @@ export default function AddAppointmentModal({ onClose, onSave }) {
             </div>
           </div>
         )}
+
 
         <form onSubmit={handleSubmit} className={styles.formGrid}>
           <div className={styles.formGroup}>
@@ -169,9 +168,10 @@ export default function AddAppointmentModal({ onClose, onSave }) {
             <label htmlFor="description">รายละเอียดการนัดหมาย</label>
           </div>
 
-          {errorMsg && <p className={styles.error}>{errorMsg}</p>}  
+          {error && <p className={styles.error}>{error}</p>}  
 
         </form>
+
             <div className={styles.modalButtons}>
                 <button onClick={onClose} type="button" className={styles.cancelButton} >
                 ยกเลิก

@@ -5,11 +5,16 @@ import axios from 'axios';
 import styles from './appointment.module.css';
 import { Plus, Eye, Trash, Pencil, } from 'lucide-react';
 import AddAppointmentModal from './AddAppointmentModal';
+import EditAppointmentModal from './EditAppointmentModal';
+
 
 export default function AppointmentsTable() {
     const [patientId, setPatientId] = useState('');
   const [appointments, setAppointments] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
+
   const [error, setError] = useState('');
 
   const fetchAppointments = async () => {
@@ -35,6 +40,39 @@ export default function AppointmentsTable() {
         setError(err.message);
     }
     };
+
+  const handleViewClick = (appointmentId) => {
+    const appointment = appointments.find((a) => a.appointment_id === appointmentId);
+    if (appointment) {
+      setSelectedAppointment(appointment);
+      setShowEditModal(true);
+    }
+  };
+
+  const handleUpdate = () => {
+    fetchAppointments();
+    setShowEditModal(false);
+  };
+
+  const handleDeleteClick = async (appointmentId) => {
+    const confirmed = window.confirm('คุณแน่ใจจะลบการนัดหมายนี่ใช่ไหม?');
+    if (!confirmed) return;
+
+    try {
+      const res = await fetch(`http://localhost:5000/api/appointments/${appointmentId}`, {
+        method: 'DELETE',
+      });
+      if (res.ok) {
+        alert('ลบการนัดหมายสำเร็จ');
+        fetchAppointments(); // โหลดข้อมูลใหม่หลังลบ
+      } else {
+        alert('ลบการนัดหมายล้มเหลว');
+      }
+    } catch (err) {
+      console.error('เกิดข้อผิดพลาด:', err);
+      alert('ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์');
+    }
+  };
 
 
   useEffect(() => {
@@ -80,8 +118,8 @@ export default function AppointmentsTable() {
           </tr>
         </thead>
         <tbody>
-          {appointments.map((a, idx) => (
-            <tr key={idx}>
+          {appointments.map((a) => (
+            <tr key={a.appointment_id}>
               <td>{a.appointment_id}</td>
               <td>{a.patients_id}</td>
               <td>{a.first_name} {a.last_name}</td>
@@ -112,10 +150,19 @@ export default function AppointmentsTable() {
           onClose={() => setShowAddModal(false)}
           onSave={() => {
             setShowAddModal(false);
-            fetchAppointments(); // รีเฟรชหลังเพิ่มข้อมูล
+            fetchAppointments();
           }}
         />
       )}
+
+      {showEditModal && selectedAppointment && (
+        <EditAppointmentModal
+          appointmentData={selectedAppointment}
+          onClose={() => setShowEditModal(false)}
+          onSave={handleUpdate}
+        />
+      )}
+
     </div>
   );
 }

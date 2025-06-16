@@ -21,13 +21,15 @@ const AddPatientModal = ({ onClose }) => {
     admittion_date: '',
   });
 
-  useEffect(() => {
-    const age = calculateAgeFromBirthdate(form.birthdate);
-    setForm(prev => ({ ...prev, age }));
-  }, [form.birthdate]);
-
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    if (name === 'birthdate') {
+      const age = calculateAgeFromBirthdate(value);
+      setForm(prev => ({ ...prev, birthdate: value, age }));
+    } else {
+      setForm(prev => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = async () => {
@@ -270,8 +272,10 @@ return (
 
 function calculateAgeFromBirthdate(birthdate) {
   if (!birthdate) return '';
-  const today = new Date();
   const birth = new Date(birthdate);
+  if (isNaN(birth.getTime())) return ''; // ตรวจสอบ valid date
+
+  const today = new Date();
   let age = today.getFullYear() - birth.getFullYear();
   const m = today.getMonth() - birth.getMonth();
   if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {

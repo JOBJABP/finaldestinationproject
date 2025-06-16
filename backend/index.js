@@ -73,6 +73,7 @@ app.post('/api/patients', async (req, res) => {
       weight,
       admittion_date,
       disease,
+      age,
     } = req.body;
 
     const status = 'มีชีวิต';
@@ -81,17 +82,17 @@ app.post('/api/patients', async (req, res) => {
       `INSERT INTO patients (
         first_name, last_name, card_id, gender, address, birthdate, nationality,
         patients_type, blood_group, phone_number, height, weight, status,
-        admittion_date, disease
+        admittion_date, disease, age
       ) VALUES (
         $1, $2, $3, $4, $5, $6, $7,
         $8, $9, $10, $11, $12, $13,
-        $14, $15
+        $14, $15, $16
       )
       RETURNING *`,
       [
         first_name, last_name, card_id, gender, address, birthdate, nationality,
         patients_type, blood_group, phone_number, height, weight, status,
-        admittion_date, disease
+        admittion_date, disease, age
       ]
     );
 
@@ -355,6 +356,292 @@ app.post('/api/appointments', async (req, res) => {
   } catch (err) {
     console.error('Error creating appointment:', err);
     res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+/*--------------PUT---------------------------------------------------*/
+
+app.put('/api/appointments/:id', async (req, res) => {
+  const { id } = req.params;
+  const { patients_id, appointment_date, appointment_time, hospital_address, department, description } = req.body;
+
+  try {
+    const result = await pool.query(
+      `UPDATE appointment
+       SET patients_id = $1,
+           appointment_date = $2,
+           appointment_time = $3,
+           hospital_address = $4,
+           department = $5,
+           description = $6
+       WHERE appointment_id = $7`,
+      [patients_id, appointment_date, appointment_time, hospital_address, department, description, id]
+    );
+
+    res.status(200).json({ message: 'Appointment updated successfully' });
+  } catch (err) {
+    console.error('Error updating appointment:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+/*--------------DELETE---------------------------------------------------*/
+
+app.delete('/api/appointments/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await pool.query(
+      'DELETE FROM appointment WHERE appointment_id = $1',
+      [id]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: 'ไม่พบการนัดหมายที่ต้องการลบ' });
+    }
+
+    res.status(200).json({ message: 'ลบการนัดหมายเรียบร้อยแล้ว' });
+  } catch (err) {
+    console.error('เกิดข้อผิดพลาดในการลบการนัดหมาย:', err);
+    res.status(500).json({ error: 'เกิดข้อผิดพลาดภายในเซิร์ฟเวอร์' });
+  }
+});
+
+/*=================DEATH_INFORMATION=====================================*/
+/*=================DEATH_INFORMATION=====================================*/
+/*=================DEATH_INFORMATION=====================================*/
+
+/*--------------GET---------------------------------------------------*/
+
+// GET /api/deaths
+app.get('/api/deaths', async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT * FROM death_information
+      ORDER BY death_id DESC
+    `);
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Error fetching death list:', err);
+    res.status(500).json({ error: 'เกิดข้อผิดพลาดในเซิร์ฟเวอร์' });
+  }
+});
+
+app.get('/api/deaths/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await pool.query(`
+      SELECT 
+        d.death_id,
+        d.death_date,
+        d.death_time,
+        d.death_cause,
+        d.status,
+        d.management,
+        p.patients_id,
+        p.first_name,
+        p.last_name,
+        p.card_id,
+        p.gender,
+        p.birthdate,
+        p.nationality,
+        p.address,
+        p.disease
+      FROM death_information d
+      JOIN patients p ON d.patients_id = p.patients_id
+      WHERE d.death_id = $1
+    `, [id]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'ไม่พบข้อมูลการเสียชีวิตนี้' });
+    }
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error('Error fetching death detail:', err);
+    res.status(500).json({ error: 'เกิดข้อผิดพลาดในเซิร์ฟเวอร์' });
+  }
+});
+
+/*--------------POST---------------------------------------------------*/
+
+app.post('/api/deaths', async (req, res) => {
+  const {
+    death_date,
+    death_time,
+    death_cause,
+    management,
+    patients_id
+  } = req.body;
+
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+
+    // 1. ดึงข้อมูลผู้ป่วยทั้งหมดจาก patients
+    const patientRes = await client.query(
+      `SELECT
+         patients_id,
+         first_name,
+         last_name,
+         card_id,
+         gender,
+         address,
+         birthdate,
+         nationality,
+         patients_type,
+         blood_group,
+         phone_number,
+         height,
+         weight,
+         admittion_date,
+         user_id,
+         disease,
+         age
+       FROM patients
+       WHERE patients_id = $1`,
+      [patients_id]
+    );
+    if (patientRes.rowCount === 0) {
+      await client.query('ROLLBACK');
+      return res.status(404).json({ error: 'ไม่พบผู้ป่วยในระบบ' });
+    }
+    const p = patientRes.rows[0];
+    console.log('patient data:', p);  // <-- ตรงนี้แสดงข้อมูลผู้ป่วย
+
+    // 2. แทรกลง death_information (snapshot ข้อมูลผู้ป่วย + ข้อมูลการเสียชีวิต)
+    const insertResult = await client.query(
+      `INSERT INTO death_information (
+         death_date,
+         death_time,
+         death_cause,
+         status,
+         management,
+         patients_id,
+         first_name,
+         last_name,
+         card_id,
+         gender,
+         address,
+         birthdate,
+         nationality,
+         patients_type,
+         blood_group,
+         phone_number,
+         height,
+         weight,
+         admittion_date,
+         user_id,
+         disease,
+         age
+       ) VALUES (
+         $1, $2, $3, $4, $5, $6,
+         $7, $8, $9, $10, $11, $12,
+         $13, $14, $15, $16, $17, $18,
+         $19, $20, $21, $22
+       )
+        RETURNING *`,
+      [
+        death_date,
+        death_time,
+        death_cause,
+        'เสียชีวิต',      // บังคับสถานะ
+        management,
+        patients_id,
+
+        // ข้อมูลผู้ป่วย
+        p.first_name,
+        p.last_name,
+        p.card_id,
+        p.gender,
+        p.address,
+        p.birthdate,
+        p.nationality,
+        p.patients_type,
+        p.blood_group,
+        p.phone_number,
+        p.height,
+        p.weight,
+        p.admittion_date,
+        p.user_id,
+        p.disease,
+        p.age
+      ]
+    );
+
+    console.log('insertResult:', insertResult);
+
+    // 3. ลบข้อมูลผู้ป่วยออกจาก patients
+    const deleteResult = await client.query(
+      'DELETE FROM patients WHERE patients_id = $1',
+      [patients_id]
+    );
+
+    await client.query('COMMIT');
+    res.status(201).json({ message: 'บันทึกข้อมูลการเสียชีวิตสำเร็จ' });
+  } catch (err) {
+    await client.query('ROLLBACK');
+    console.error('Error in POST /death_information:', err);
+    res.status(500).json({ error: 'เกิดข้อผิดพลาดขณะบันทึกข้อมูล' });
+  } finally {
+    client.release();
+  }
+  
+});
+
+/*--------------PUT---------------------------------------------------*/
+
+app.put('/api/deaths/:id', async (req, res) => {
+  const { id } = req.params;
+  const {
+    death_date,
+    death_time,
+    death_cause,
+    status,
+    management,
+    patients_id
+  } = req.body;
+
+  try {
+    const result = await pool.query(
+      `UPDATE death_information
+       SET death_date = $1,
+           death_time = $2,
+           death_cause = $3,
+           status = $4,
+           management = $5,
+           patients_id = $6
+       WHERE death_id = $7`,
+      [death_date, death_time, death_cause, status, management, patients_id, id]
+    );
+
+    res.json({ message: 'อัปเดตข้อมูลการเสียชีวิตสำเร็จ' });
+  } catch (err) {
+    console.error('Error updating death info:', err);
+    res.status(500).json({ error: 'ไม่สามารถอัปเดตข้อมูลได้' });
+  }
+});
+
+
+/*--------------DELETE---------------------------------------------------*/
+
+app.delete('/api/deaths/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await pool.query(
+      'DELETE FROM death_information WHERE death_id = $1',
+      [id]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: 'ไม่พบข้อมูลการเสียชีวิตนี้' });
+    }
+
+    res.json({ message: 'ลบข้อมูลการเสียชีวิตสำเร็จ' });
+  } catch (err) {
+    console.error('Error deleting death record:', err);
+    res.status(500).json({ error: 'ไม่สามารถลบข้อมูลได้' });
   }
 });
 
