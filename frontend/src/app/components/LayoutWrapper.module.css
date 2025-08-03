@@ -1,0 +1,15 @@
+
+.layoutContainer {
+  display: flex;
+  min-height: 100vh;
+}
+.mainContentArea {
+  flex: 1;
+  margin-left: var(--sidebar-width);
+  transition: margin-left 0.3s ease-in-out;
+  padding-top: 60px; /* เว้นพื้นที่ด้านบนสำหรับ Header */
+  position: relative;
+}
+.mainSection {
+  padding: 1.5rem;
+}

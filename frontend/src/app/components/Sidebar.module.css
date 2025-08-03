@@ -1,132 +1,113 @@
-.sidebar {
-    position: fixed;           /* ทำให้ติดกับจอ */
-    top: 0;                    /* ชิดขอบบน */
-    left: 0;                   /* ชิดขอบซ้าย */
-    width: 250px;
-    min-height: 100vh;
-    background-color: #02786e;
-    color: white;
-    padding-top: 20px;
-    overflow: hidden;
-    box-shadow: 4px 0px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1000;             /* เพื่อให้ลอยอยู่บน content */
-}
 
-  .userInfo {
-    display: flex;
-    align-items: center;
-    padding: 10px 20px;
-  }
-  
-  .userImg {
-    width: 75px;
-    height: 75px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 15px;
-  }
-  
-  .userDetails {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .userName, .userPosition {
-    margin: 0;
-    padding: 0;
-  }
-  
-  .userName {
-    font-size: 16px;
-    font-weight: bold;
-  }
-  
-  .userPosition {
-    font-size: 14px;
-    color: #bdc3c7;
-  }
-  
-  .divider {
-    border: 1px solid #ECECEC;
-    margin-top: 15px;
-  }
-  
-  .navLinks {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .navLinks li {
-    margin: 20px 0;
-  }
-  
-  .navLinks li a {
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
-    padding: 8px 12px;
-    display: block;
-    border-radius: 4px; /* เพิ่มขอบมน */
-  }
-  
-  /* .navLinks li a:hover {
-    background-color: #ffffff; 
-    color: white;
-    text-decoration: none;
-  } */
-  
-  .noStyleLink {
-    text-decoration: none;
-    color: inherit;
-  }
-  
-  /* สไตล์สำหรับ .sidebarItem */
-  .sidebarItem {
-    display: flex;
-    align-items: center;
-    height: 65px; /* ความสูงปกติ */
-    padding-left: 20px; 
-  
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, height 0.3s ease, padding 0.3s ease; /* เพิ่ม transition สำหรับ height และ padding */
-    border-top-left-radius: 12px;
-    border-bottom-left-radius: 12px; /* เพิ่มขอบมน */
-    cursor: pointer; /* เปลี่ยนเคอร์เซอร์เป็นมือเมื่อ hover */
-  }
-  
-  .sidebarItem:hover {
-    background-color: #f7f7f7; /* เปลี่ยนสีพื้นหลังเมื่อ hover */
-    color: white;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* เพิ่มเงา */
-    transform: translateX(5px); /* ขยับเมนูเล็กน้อยเมื่อ hover */
-  }
-  
-  /* เพิ่มสถานะเมื่อมีการคลิก */
-  .sidebarItem:active {
-    height: 50px; /* ความสูงเมื่อคลิก */
-    background-color: #1abc9c; /* เปลี่ยนสีพื้นหลังเมื่อคลิก */
-    padding-left: 10px; /* เพิ่ม padding เล็กน้อยเพื่อให้คลิกดูชัดเจนยิ่งขึ้น */
-    transform: scale(0.98); /* ขยับขนาดเล็กน้อยเพื่อให้ดูเหมือนกดลง */
-    transition: height 0.2s ease, padding 0.2s ease, transform 0.2s ease, background-color 0.2s ease; /* ใช้ transition ที่เร็วขึ้นเมื่อคลิก */
-  }
-  
-  
-  .sidebarIcon {
-    font-size: 22px;
-    transition: transform 0.3s ease, color 0.3s ease;
-    color: inherit;
-  }
-  
-  .sidebarText {
-    font-size: 16px;
-    font-weight: 500;
-    color: inherit;
-  }
-  
-  .sidebarItem:hover .sidebarIcon {
-    transform: scale(1.2); /* ขยายไอคอนเมื่อ hover */
-  }
-  
-  .sidebarItem:focus {
-    background-color: #16a085; /* สีเมื่อมีการ focus */
-    outline: none; 
-  }
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  padding: 1rem 0;
+  background-color: #fff;
+  border-right: 1px solid #e2e8f0;
+  transition: width 0.3s ease-in-out;
+  z-index: 1000;
+  overflow-y: auto;
+}
+.sidebar.collapsed {
+  width: 78px;
+  overflow-x: hidden;
+}
+.sidebar.expanded {
+  width: 250px;
+}
+.userProfile {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  margin-bottom: 1rem;
+}
+.userAvatar {
+  border-radius: 50%;
+  object-fit: cover;
+}
+.userInfo {
+  display: flex;
+  flex-direction: column;
+}
+.userName {
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0;
+}
+.userRole {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin: 0;
+}
+.navigation {
+  padding: 0 1rem;
+}
+.menuList {
+  list-style: none;
+  padding: 0;
+}
+.menuItem {
+  margin-bottom: 0.5rem;
+}
+.menuLink {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #334155;
+  transition: background-color 0.2s ease;
+  position: relative;
+}
+.menuLink:hover {
+  background-color: #f1f5f9;
+}
+.menuLink.active {
+  background-color: #e2e8f0;
+  font-weight: 600;
+  color: #0d9488;
+}
+.menuLink.active .menuIcon {
+  color: #0d9488;
+}
+.menuIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+}
+.sidebar.collapsed .menuLabel,
+.sidebar.collapsed .submenuToggleIcon {
+  display: none;
+}
+.submenuList {
+  list-style: none;
+  padding: 0;
+  margin-top: 0.5rem;
+  border-left: 2px solid #e2e8f0;
+  margin-left: 1.5rem;
+}
+.submenuItem {
+  margin-bottom: 0.25rem;
+}
+.submenuLink {
+  display: block;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #64748b;
+  transition: background-color 0.2s ease;
+}
+.submenuLink:hover {
+  background-color: #f1f5f9;
+}
+.submenuLink.active {
+  color: #0d9488;
+  font-weight: 600;
+}

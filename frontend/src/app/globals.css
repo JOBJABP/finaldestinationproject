@@ -1,0 +1,227 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Sarabun:wght@300;400;500;600;700&display=swap');
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  color: #334155;
+  background-color: #f1f5f9;
+  line-height: 1.6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Scrollbar (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
+/* Scrollbar (Firefox) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #bbb #f1f1f1; /* <-- เปลี่ยน: สี thumb ให้ดูนุ่มนวลขึ้น */
+}
+
+/* Global Styles for Cards/Containers (Optional, but good for consistency) */
+.card {
+  background-color: #ffffff;
+  border-radius: 12px; /* ขอบโค้งมน */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06); /* เงาที่นุ่มนวล */
+  padding: 25px;
+  margin-bottom: 20px; /* ระยะห่างระหว่าง card */
+}
+
+.table-container {
+  overflow-x: auto; /* ทำให้ตาราง scroll ได้ถ้าเนื้อหาเกิน */
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: separate; /* เพื่อให้ border-radius ทำงานกับ th */
+  border-spacing: 0;
+  min-width: 800px; /* กำหนดความกว้างขั้นต่ำของตารางเพื่อให้ scroll ได้ */
+}
+
+.data-table th,
+.data-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0; /* เส้นแบ่งแถว */
+}
+
+.data-table th {
+  background-color: #f8f8f8; /* สีพื้นหลัง header ของตาราง */
+  font-weight: 600;
+  color: #555;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.data-table tr:hover {
+  background-color: #f5f5f5; /* สีเมื่อ hover แถว */
+}
+
+.data-table td {
+  color: #444;
+  font-size: 0.95em;
+}
+
+/* First and last child specific styling for table borders */
+.data-table th:first-child,
+.data-table td:first-child {
+  border-left: none; /* ไม่มีขอบซ้าย */
+}
+
+.data-table th:last-child,
+.data-table td:last-child {
+  border-right: none; /* ไม่มีขอบขวา */
+}
+
+/* Rounded corners for table header */
+.data-table th:first-child {
+  border-top-left-radius: 10px;
+}
+.data-table th:last-child {
+  border-top-right-radius: 10px;
+}
+
+/* Action buttons in table */
+.action-button {
+  background: none;
+  border: none;
+  color: #00796b; /* สีเขียวไอคอน */
+  cursor: pointer;
+  font-size: 1.1em;
+  margin: 0 5px;
+  transition: color 0.2s ease-in-out;
+  display: inline-flex; /* <-- เพิ่ม: เพื่อจัดไอคอนและข้อความ (ถ้ามี) ให้อยู่กลาง */
+  align-items: center; /* <-- เพิ่ม */
+  justify-content: center; /* <-- เพิ่ม */
+}
+
+.action-button:hover {
+  color: #004d40;
+}
+
+/* ถ้าใช้ React Icons ใน action-button */
+.action-button svg { /* <-- เพิ่ม: เพื่อปรับขนาดและสีของไอคอน React Icons */
+  font-size: 1.1em; /* ใช้ font-size เพื่อควบคุมขนาดไอคอน */
+  color: #00796b;
+}
+
+.action-button:hover svg {
+  color: #004d40;
+}
+
+.button-primary {
+  background-color: #00796b; /* สีปุ่มหลัก */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.button-primary:hover {
+  background-color: #00695c;
+  transform: translateY(-1px);
+}
+
+.button-secondary {
+  background-color: #e0e0e0;
+  color: #333;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.button-secondary:hover {
+  background-color: #bdbdbd;
+  transform: translateY(-1px);
+}
+
+.search-input-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 8px 15px;
+  border: 1px solid #e0e0e0;
+}
+
+.search-input-container i, .search-input-container svg { /* <-- เปลี่ยน: เพิ่ม svg */
+  color: #777;
+  margin-right: 10px;
+  font-size: 1.1em; /* <-- เพิ่ม: ปรับขนาดไอคอน */
+}
+
+.search-input-container input {
+  border: none;
+  outline: none;
+  flex-grow: 1;
+  padding: 8px 0;
+  font-size: 1em;
+  color: #333;
+  background: transparent;
+}
+
+.search-input-container input::placeholder {
+  color: #999;
+}
+
+/* Flex container for table actions */
+.table-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 15px;
+}
+
+.table-actions .left-section {
+  flex-grow: 1;
+}
+
+.table-actions .right-section {
+  display: flex;
+  gap: 10px;
+}

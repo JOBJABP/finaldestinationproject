@@ -1,58 +1,50 @@
-'use client'
+// app/page.js
+'use client';
 
-import { useEffect, useState } from 'react'
+import React from 'react';
+import styles from './home.module.css';
+import DigitalClock from './components/Dashboard/DigitalClock';
 
-export default function Home() {
-  const [patients, setPatients] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-
-  useEffect(() => {
-    fetch('http://localhost:5000/api/patients')
-      .then(res => {
-        if (!res.ok) throw new Error('ไม่สามารถดึงข้อมูลได้')
-        return res.json()
-      })
-      .then(data => {
-        console.log('Fetched:', data)
-        setPatients(data) // ✅ ใช้ .patients
-      })
-      .catch(error => {
-        console.error('Fetch error:', error)
-        setError(error.message)
-      })
-      .finally(() => setLoading(false))
-  }, [])
-
+export default function HomePage() {
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center p-8">
-      <h1 className="text-2xl font-bold mb-4">รายชื่อผู้ป่วย</h1>
-
-      {loading && <p>กำลังโหลดข้อมูล...</p>}
-      {error && <p className="text-red-500">เกิดข้อผิดพลาด: {error}</p>}
-
-      {!loading && !error && patients.length === 0 && <p>ไม่มีข้อมูล</p>}
-
-      {!loading && !error && patients.length > 0 && (
-        <ul className="mt-4 space-y-2">
-          {patients.map(patient => (
-            <li key={patient.patients_id}>
-              {patient.first_name} {patient.last_name} — อายุ: {calculateAge(patient.birthdate)} ปี
-            </li>
-          ))}
-        </ul>
-      )}
-    </main>
-  )
-}
-
-function calculateAge(birthdate) {
-  const birth = new Date(birthdate)
-  const today = new Date()
-  let age = today.getFullYear() - birth.getFullYear()
-  const m = today.getMonth() - birth.getMonth()
-  if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
-    age--
-  }
-  return age
+    <div className={styles.homeContainer}>
+      <div className={styles.gridContainer}>
+        {/* แถวบน: 2 บล็อก */}
+        <div className={styles.gridRow}>
+          {/* บล็อกที่ 1: นัดหมายประจำวัน */}
+          <div className={styles.gridItem}>
+            <div className={styles.card}>
+              <div className={styles.cardHeader}>
+                <h2 className={styles.cardTitle}>นัดหมายประจำวัน</h2>
+              </div>
+              <div className={styles.cardContent}>
+                {/* เนื้อหาของบล็อกจะถูกเพิ่มในภายหลัง */}
+              </div>
+            </div>
+          </div>
+          {/* บล็อกที่ 2: จำนวนผู้ป่วยในแต่ละแผนก */}
+          <div className={styles.gridItem}>
+            <div className={styles.card}>
+              <div className={styles.cardHeader}>
+                <h2 className={styles.cardTitle}>จำนวนผู้ป่วยในแต่ละแผนก</h2>
+              </div>
+              <div className={styles.cardContent}>
+                {/* เนื้อหาของบล็อกจะถูกเพิ่มในภายหลัง */}
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {/* แถวล่าง: 1 บล็อกเต็ม */}
+        <div className={styles.gridRow}>
+          {/* บล็อกที่ 3: เวลาปัจจุบันในขณะนี้ */}
+          <div className={`${styles.gridItem} ${styles.fullWidth}`}>
+            <div className={styles.card}>
+              <DigitalClock />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }

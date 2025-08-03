@@ -1,0 +1,49 @@
+/* app/home.module.css */
+.homeContainer {
+  padding: 1.5rem;
+}
+
+.gridContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* ระยะห่างระหว่างแถว */
+}
+
+.gridRow {
+  display: flex;
+  gap: 1.5rem; /* ระยะห่างระหว่างบล็อกในแถวเดียวกัน */
+}
+
+.gridItem {
+  flex: 1; /* ทำให้แต่ละบล็อกขยายเต็มพื้นที่ที่เหลือในแถว */
+}
+
+.fullWidth {
+  width: 100%; /* สำหรับบล็อกที่ต้องการให้เต็มความกว้าง */
+}
+
+/* รูปแบบของแต่ละบล็อก (Card) */
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* ป้องกันเนื้อหาล้นขอบ */
+  height: 100%; /* ทำให้ Card ขยายเต็มความสูงของ Grid Item */
+}
+
+/* ส่วนหัวของบล็อก (สีเขียว) */
+.cardHeader {
+  background-color: #0d9488;
+  color: #fff;
+  padding: 1rem 1.5rem;
+}
+
+.cardTitle {
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+/* ส่วนเนื้อหาของบล็อก (พื้นหลังขาว) */
+.cardContent {
+  padding: 1.5rem;
+}

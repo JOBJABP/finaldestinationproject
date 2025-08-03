@@ -1,27 +1,27 @@
 import React from "react";
-import Header from "./components/Header";
-import Sidebar from "./components/Sidebar";
-import styles from "./globals.module.css"
+import LayoutWrapper from "./components/LayoutWrapper";
+import "./globals.css";
 
-export default function Rootlayout({ children }) {
-    return (
-      <html lang="en" className={styles.page}>
-        <body>
-          <div className={styles.layout}>
-            <div style={{ display: 'flex', height: '100vh' }}> 
-              <Sidebar />{/* Sidebar ชิดซ้าย */}
-            {/* เนื้อหาฝั่งขวา */}
-              <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-              
-                <Header />{/* Header อยู่ตรงกลาง */}
-                
-                <main className={styles.main} style={{ flex: 1 }}>{children}</main>
-                
-              </div>
-            </div>
-          </div>
-        </body>
-      </html>
-    );
-  }
-  
+export const metadata = {
+  title: 'ระบบจัดการข้อมูลผู้ป่วย',
+  description: 'ระบบจัดการข้อมูลผู้ป่วยสำหรับแพทย์และพยาบาล',
+};
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="th">
+      <head>
+        <link 
+          rel="stylesheet" 
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" 
+          integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5KwQ/AqjM/QERbwP6KkSxf/tf5JNEkXjQd4xM8z/w1W+FVYJ2pDw==" 
+          crossOrigin="anonymous" 
+          referrerPolicy="no-referrer" 
+        />
+      </head>
+      <body>
+        <LayoutWrapper>{children}</LayoutWrapper>
+      </body>
+    </html>
+  );
+}

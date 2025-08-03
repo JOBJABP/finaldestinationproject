@@ -1,39 +1,44 @@
-/* Header.module.css */
+
 .header {
-  margin-top: 5px;
-  margin-left: 250px; /* ความกว้างของ sidebar */
-  background-color: #02786e;
-  padding: 16px;
-  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 70px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
-  justify-content: center;
   align-items: center;
-  border-radius: 16px;
-  position: relative;
+  padding: 0 1rem;
+  z-index: 999;
+  transition: all 0.3s ease;
+  left: var(--sidebar-width);
+  width: calc(100% - var(--sidebar-width));
 }
-
-
-.headerTitle {
-  margin: 0; 
-  font-size: 24px;
-  
-}
-
-.header_button {
-  display: flex; /*เพื่อให้ icon เรียงตัวกันและใช้ gap ได้*/
-  gap: 15px;
-  align-items: center; /*จัด icon ให้อยู่กึ่งกลางแนวตั้งภายในกลุ่ม icon เอง*/
-
-  position: absolute; /* นำออกจาก normal flow เพื่อให้ .headerTitle อยู่ตรงกลางได้อิสระ */
-  right: 16px; /* ระยะห่างจากขอบขวาของ .header (สัมพันธ์กับ padding ของ .header) */
-  top: 50%; /* จัดให้อยู่กึ่งกลางแนวตั้ง (จุดเริ่มต้นบนสุดของ element) */
-  transform: translateY(-50%); /* ย้ายขึ้นไปครึ่งหนึ่งของความสูงตัวเองเพื่อให้กึ่งกลางจริงๆ */
-}
-
-.icon {
+.burgerButton {
   background: none;
   border: none;
-  font-size: 24px;
   cursor: pointer;
-  color: white; /* กำหนดสีของ icon ให้เป็นสีขาวเพื่อให้มองเห็นชัดเจน */
+  color: #334155;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  margin-right: 1rem;
+}
+.headerBrand {
+  display: flex;
+  align-items: center;
+}
+.brandText {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+.headerRight {
+  margin-left: auto;
+}
+
+.brandLogo{
+  height: 50px;
+  width: 50px;
+  margin-right: 10px;
 }
